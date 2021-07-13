@@ -1,9 +1,9 @@
 package org.djh.mall.mapper;
 
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import org.apache.ibatis.annotations.Mapper;
 import org.djh.mall.entity.User;
-import org.springframework.stereotype.Repository;
 
 /**
  * <p>
@@ -14,7 +14,12 @@ import org.springframework.stereotype.Repository;
  * @since 2021-07-13
  */
 @Mapper
-@Repository
 public interface UserMapper extends BaseMapper<User> {
+
+    default User selectOneByUsername(String username) {
+        QueryWrapper<User> query = new QueryWrapper<>();
+        query.eq("username", username);
+        return selectOne(query);
+    }
 
 }

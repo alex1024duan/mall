@@ -16,4 +16,10 @@ public interface IUserService extends IService<User> {
 
     void register(String userName, String password) throws MallException;
 
+    User login(String userName, String password) throws MallException;
+
+    void userUpdate(String signature, Integer id) throws MallException;
+
+    User adminLogin(String userName, String password) throws MallException;
+
 }

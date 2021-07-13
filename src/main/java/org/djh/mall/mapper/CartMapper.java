@@ -1,9 +1,8 @@
 package org.djh.mall.mapper;
 
+import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import org.apache.ibatis.annotations.Mapper;
 import org.djh.mall.entity.Cart;
-import com.baomidou.mybatisplus.core.mapper.BaseMapper;
-import org.springframework.stereotype.Repository;
 
 /**
  * <p>
@@ -14,7 +13,6 @@ import org.springframework.stereotype.Repository;
  * @since 2021-07-13
  */
 @Mapper
-@Repository
 public interface CartMapper extends BaseMapper<Cart> {
 
 }

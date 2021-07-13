@@ -1,7 +1,7 @@
 package org.djh.mall.service.impl;
 
-import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import org.djh.mall.common.Constant;
 import org.djh.mall.entity.User;
 import org.djh.mall.exception.MallException;
 import org.djh.mall.exception.MallExceptionEnum;
@@ -30,20 +30,54 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements IU
     }
 
     @Override
-    public void register(String userName, String password) throws MallException {
-        QueryWrapper<User> query = new QueryWrapper<>();
-        query.eq("username", userName);
-        userMapper.selectOne(query);
-        if(getOne(query) != null) {
-            throw new MallException(MallExceptionEnum.USERNAME_EXISTED);
+    public void register(String userName, String password) {
+        if(userMapper.selectOneByUsername(userName) != null) {
+            throw new MallException(MallExceptionEnum.USER_EXISTED);
         }
 
         User user = new User();
         user.setUsername(userName);
         user.setPassword(Md5Utils.getMd5Str(password));
-        if(userMapper.insert(user) != 1) {
+        if(userMapper.insert(user) == 0) {
             throw new MallException(MallExceptionEnum.INSERT_FAILED);
         }
+    }
+
+    @Override
+    public User login(String userName, String password) {
+        User user = userMapper.selectOneByUsername(userName);
+
+        if(user == null) {
+            throw new MallException(MallExceptionEnum.USER_NO_EXISTED);
+        }
+
+        if(!Md5Utils.getMd5Str(password).equals(user.getPassword())) {
+            throw new MallException(MallExceptionEnum.PASSWORD_CHECK_FAILED);
+        }
+
+        user.setPassword(null);
+        return user;
+    }
+
+    @Override
+    public void userUpdate(String signature, Integer id) {
+        User user = new User();
+        user.setId(id);
+        user.setPersonalizedSignature(signature);
+        if(userMapper.updateById(user) == 0) {
+            throw new MallException(MallExceptionEnum.UPDATE_FAILED);
+        }
+    }
+
+    @Override
+    public User adminLogin(String userName, String password) {
+        User user = login(userName, password);
+
+        if(!Constant.ADMIN_ROLE_VALUE.equals(user.getRole())) {
+            throw new MallException(MallExceptionEnum.IS_NOT_ADMIN);
+        }
+
+        return user;
     }
 
 }

@@ -11,34 +11,49 @@ public enum MallExceptionEnum {
     SYSTEM_ERROR(20000, "系统异常"),
 
     /**
-     * 用户名不能为空
+     * 用户已存在
      */
-    NEED_USER_NAME(10001, "用户名不能为空"),
+    USER_EXISTED(10001, "用户已存在"),
 
     /**
-     * 密码不能为空
+     * 用户不存在
      */
-    NEED_PASSWORD(10002, "密码不能为空"),
+    USER_NO_EXISTED(10002, "用户不存在"),
 
     /**
-     * 用户名长度不能小于8位
+     * 密码错误
      */
-    USERNAME_TOO_SHORT(10003, "用户名长度不能小于8位"),
+    PASSWORD_CHECK_FAILED(10003, "密码错误"),
 
     /**
-     * 密码长度不能小于8位
+     * 执行此操作前需要先进行登录
      */
-    PASSWORD_TOO_SHORT(10004, "密码长度不能小于8位"),
-
-    /**
-     * 不允许重名, 注册失败
-     */
-    USERNAME_EXISTED(10005, "不允许重名, 注册失败"),
+    NEED_LOGIN(10004, "执行此操作前需要先进行登录"),
 
     /**
      * 插入失败, 请重试
      */
-    INSERT_FAILED(10006, "插入失败, 请重试");
+    INSERT_FAILED(10005, "插入失败, 请重试"),
+
+    /**
+     * 更新失败, 请重试
+     */
+    UPDATE_FAILED(10006, "更新失败, 请重试"),
+
+    /**
+     * 您不是管理员, 没有相关权限
+     */
+    IS_NOT_ADMIN(10007, "您不是管理员, 没有相关权限"),
+
+    /**
+     * 请求参数错误
+     */
+    REQUEST_PARAM_ERROR(10008, "请求参数错误"),
+
+    /**
+     * 同层级下目录已存在
+     */
+    CATEGORY_EXISTED(10009, "同层级下目录已存在");
 
     private final Integer status;
     private final String msg;
