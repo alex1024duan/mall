@@ -1,6 +1,7 @@
 package org.djh.mall.filter;
 
 import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.serializer.SerializerFeature;
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.annotation.AfterReturning;
 import org.aspectj.lang.annotation.Aspect;
@@ -44,7 +45,7 @@ public class WebLogAspect {
 
     @AfterReturning(returning = "res", pointcut = "webLog()")
     public void doAfterReturning(Object res) {
-        log.info("RESPONSE : " + JSON.toJSONString(res));
+        log.info("RESPONSE : " + JSON.toJSONString(res, SerializerFeature.WriteMapNullValue));
     }
 
 }

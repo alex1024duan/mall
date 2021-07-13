@@ -1,5 +1,6 @@
 package org.djh.mall;
 
+import com.alibaba.fastjson.serializer.SerializerFeature;
 import com.alibaba.fastjson.support.config.FastJsonConfig;
 import com.alibaba.fastjson.support.spring.FastJsonHttpMessageConverter;
 import org.springframework.context.annotation.Configuration;
@@ -17,11 +18,13 @@ public class WebMvcConfig implements WebMvcConfigurer {
 
     @Override
     public void configureMessageConverters(List<HttpMessageConverter<?>> converters) {
+        FastJsonHttpMessageConverter fastJsonConverter = new FastJsonHttpMessageConverter();
+
+        fastJsonConverter.setDefaultCharset(StandardCharsets.UTF_8);
+
         FastJsonConfig config = new FastJsonConfig();
         config.setDateFormat("yyyy-MM-dd HH:mm:ss");
-
-        FastJsonHttpMessageConverter fastJsonConverter = new FastJsonHttpMessageConverter();
-        fastJsonConverter.setDefaultCharset(StandardCharsets.UTF_8);
+        config.setSerializerFeatures(SerializerFeature.WriteMapNullValue);
         fastJsonConverter.setFastJsonConfig(config);
 
         converters.add(0, fastJsonConverter);
