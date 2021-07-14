@@ -41,19 +41,34 @@ public enum MallExceptionEnum {
     UPDATE_FAILED(10006, "更新失败, 请重试"),
 
     /**
+     * 删除失败, 请重试
+     */
+    DELETE_FAILED(10007, "删除失败, 请重试"),
+
+    /**
      * 您不是管理员, 没有相关权限
      */
-    IS_NOT_ADMIN(10007, "您不是管理员, 没有相关权限"),
+    IS_NOT_ADMIN(10008, "您不是管理员, 没有相关权限"),
 
     /**
      * 请求参数错误
      */
-    REQUEST_PARAM_ERROR(10008, "请求参数错误"),
+    REQUEST_PARAM_ERROR(10009, "请求参数错误"),
 
     /**
-     * 同层级下目录已存在
+     * 同层级下已有其他同名目录存在
      */
-    CATEGORY_EXISTED(10009, "同层级下目录已存在");
+    CATEGORY_NAME_EXISTED(10010, "同层级下已有其他同名目录存在"),
+
+    /**
+     * 同层级下已有其他同排序位次的目录存在
+     */
+    CATEGORY_ORDER_NUM_EXISTED(10011, "同层级下已有其他同排序位次的目录存在"),
+
+    /**
+     * 目录不存在
+     */
+    CATEGORY_NO_EXISTED(10012, "目录不存在");
 
     private final Integer status;
     private final String msg;

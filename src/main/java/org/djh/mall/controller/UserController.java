@@ -4,7 +4,6 @@ import io.swagger.annotations.ApiOperation;
 import org.djh.mall.common.ApiRestResponse;
 import org.djh.mall.common.Constant;
 import org.djh.mall.entity.User;
-import org.djh.mall.exception.MallExceptionEnum;
 import org.djh.mall.service.IUserService;
 import org.hibernate.validator.constraints.Length;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -63,11 +62,9 @@ public class UserController {
              HttpSession session)
     {
         User sessionUser = (User)session.getAttribute(Constant.MALL_USER);
-        if(sessionUser == null) {
-            return ApiRestResponse.error(MallExceptionEnum.NEED_LOGIN);
-        }
-
         userService.userUpdate(signature, sessionUser.getId());
+        sessionUser.setPersonalizedSignature(signature);
+        session.setAttribute(Constant.MALL_USER, sessionUser);
         return ApiRestResponse.success(null);
     }
 

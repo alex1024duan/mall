@@ -14,6 +14,12 @@ public class MallException extends RuntimeException {
         this.msg = ex.getMsg();
     }
 
+    public MallException(Integer status, String msg) {
+        super(status + "-" + msg);
+        this.status = status;
+        this.msg = msg;
+    }
+
     public Integer getStatus() {
         return status;
     }

@@ -1,8 +1,8 @@
 package org.djh.mall.service;
 
-import org.djh.mall.entity.Category;
+import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.service.IService;
-import org.djh.mall.request.AdminCategoryAddRequest;
+import org.djh.mall.entity.Category;
 
 /**
  * <p>
@@ -14,5 +14,11 @@ import org.djh.mall.request.AdminCategoryAddRequest;
  */
 public interface ICategoryService extends IService<Category> {
 
-    void adminCategoryAdd(AdminCategoryAddRequest request);
+    void adminCategoryAdd(Category category);
+
+    void adminCategoryUpdate(Category category);
+
+    void adminCategoryDelete(Integer id);
+
+    IPage<Category> adminCategoryList(Integer pageNum, Integer pageSize);
 }

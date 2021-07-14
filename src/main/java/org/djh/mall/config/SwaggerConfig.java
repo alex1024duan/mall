@@ -1,10 +1,7 @@
-package org.djh.mall;
+package org.djh.mall.config;
 
-import com.alibaba.druid.pool.DruidDataSource;
-import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.Primary;
 import springfox.documentation.builders.ApiInfoBuilder;
 import springfox.documentation.builders.PathSelectors;
 import springfox.documentation.builders.RequestHandlerSelectors;
@@ -12,20 +9,11 @@ import springfox.documentation.service.ApiInfo;
 import springfox.documentation.spi.DocumentationType;
 import springfox.documentation.spring.web.plugins.Docket;
 
-import javax.sql.DataSource;
-
 /**
  * @author alex1024duan
  */
 @Configuration
-public class ApplicationConfig {
-
-    @Primary
-    @Bean
-    @ConfigurationProperties("spring.datasource.druid.dev")
-    public DataSource devDataSource(){
-        return new DruidDataSource();
-    }
+public class SwaggerConfig {
 
     @Bean
     public Docket api() {
