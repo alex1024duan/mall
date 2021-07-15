@@ -33,7 +33,9 @@ public class AdminCheckFilter implements Filter {
         if(Constant.ADMIN_ROLE_VALUE.equals(user.getRole())) {
            chain.doFilter(request, response);
         }
+
         byte[] res = JSON.toJSONString(ApiRestResponse.error(MallExceptionEnum.IS_NOT_ADMIN), SerializerFeature.WriteMapNullValue).getBytes(StandardCharsets.UTF_8);
+        response.setContentType("application/json; charset=UTF-8");
         response.getOutputStream().write(res);
     }
 

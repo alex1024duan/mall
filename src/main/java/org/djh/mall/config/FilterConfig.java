@@ -1,13 +1,12 @@
 package org.djh.mall.config;
 
 import org.djh.mall.filter.AdminCheckFilter;
-import org.djh.mall.filter.RequestCharacterEncodingFilter;
 import org.djh.mall.filter.LoginCheckFilter;
-import org.djh.mall.filter.ResponseContentTypeFilter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.web.filter.CharacterEncodingFilter;
 
 /**
  * @author alex1024duan
@@ -15,20 +14,8 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 public class FilterConfig {
 
-    private RequestCharacterEncodingFilter requestCharacterEncodingFilter;
-    private ResponseContentTypeFilter responseContentTypeFilter;
     private LoginCheckFilter loginCheckFilter;
     private AdminCheckFilter adminCheckFilter;
-
-    @Autowired
-    public void setRequestCharacterEncodingFilter(RequestCharacterEncodingFilter requestCharacterEncodingFilter) {
-        this.requestCharacterEncodingFilter = requestCharacterEncodingFilter;
-    }
-
-    @Autowired
-    public void setResponseContentTypeFilter(ResponseContentTypeFilter responseContentTypeFilter) {
-        this.responseContentTypeFilter = responseContentTypeFilter;
-    }
 
     @Autowired
     public void setLoginCheckFilter(LoginCheckFilter loginCheckFilter) {
@@ -41,20 +28,16 @@ public class FilterConfig {
     }
 
     @Bean
-    public FilterRegistrationBean<RequestCharacterEncodingFilter> requestCharacterEncodingFilterConfig() {
-        FilterRegistrationBean<RequestCharacterEncodingFilter> filterRegistrationBean = new FilterRegistrationBean<>();
-        filterRegistrationBean.setFilter(requestCharacterEncodingFilter);
-        filterRegistrationBean.addUrlPatterns("/*");
-        filterRegistrationBean.setOrder(0);
-        return filterRegistrationBean;
+    public CharacterEncodingFilter characterEncodingFilter() {
+        return new CharacterEncodingFilter("UTF-8", true, true);
     }
 
     @Bean
-    public FilterRegistrationBean<ResponseContentTypeFilter> responseContentTypeFilterConfig() {
-        FilterRegistrationBean<ResponseContentTypeFilter> filterRegistrationBean = new FilterRegistrationBean<>();
-        filterRegistrationBean.setFilter(responseContentTypeFilter);
+    public FilterRegistrationBean<CharacterEncodingFilter> characterEncodingFilterConfig() {
+        FilterRegistrationBean<CharacterEncodingFilter> filterRegistrationBean = new FilterRegistrationBean<>();
+        filterRegistrationBean.setFilter(characterEncodingFilter());
         filterRegistrationBean.addUrlPatterns("/*");
-        filterRegistrationBean.setOrder(1);
+        filterRegistrationBean.setOrder(0);
         return filterRegistrationBean;
     }
 
@@ -64,7 +47,7 @@ public class FilterConfig {
         filterRegistrationBean.setFilter(loginCheckFilter);
         filterRegistrationBean.addUrlPatterns("/user/update");
         filterRegistrationBean.addUrlPatterns("/admin/category/*");
-        filterRegistrationBean.setOrder(2);
+        filterRegistrationBean.setOrder(1);
         return filterRegistrationBean;
     }
 
@@ -73,7 +56,7 @@ public class FilterConfig {
         FilterRegistrationBean<AdminCheckFilter> filterRegistrationBean = new FilterRegistrationBean<>();
         filterRegistrationBean.setFilter(adminCheckFilter);
         filterRegistrationBean.addUrlPatterns("/admin/category/*");
-        filterRegistrationBean.setOrder(3);
+        filterRegistrationBean.setOrder(2);
         return filterRegistrationBean;
     }
 

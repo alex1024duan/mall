@@ -33,7 +33,9 @@ public class LoginCheckFilter implements Filter {
         if(user != null) {
             chain.doFilter(request, response);
         }
+
         byte[] res = JSON.toJSONString(ApiRestResponse.error(MallExceptionEnum.NEED_LOGIN), SerializerFeature.WriteMapNullValue).getBytes(StandardCharsets.UTF_8);
+        response.setContentType("application/json; charset=UTF-8");
         response.getOutputStream().write(res);
     }
 
